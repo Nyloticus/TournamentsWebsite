@@ -1,0 +1,92 @@
+﻿@model TournamentTeamView
+
+@{
+    ViewData["Title"] = "Assign Teams to Tournament";
+    Layout = "_AdminLayout"; 
+}
+<input type="hidden" id="baseUrl" value="@ViewBag.BaseUrl" />
+<input type="hidden" id="token" value="@ViewBag.Token" />
+
+<h1>Assign Teams to Tournament</h1>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<form asp-controller="TournamentTeam" asp-action="Assign" method="post">
+    <div class="form-group">
+        <label for="tournamentId">Tournament</label>
+        <select class="form-control" id="tournamentId" name="TournamentId" required>
+            @foreach (var tournament in Model.Tournaments)
+            {
+                <option value="@tournament.Id">@tournament.Name</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="teamIds">Teams</label>
+        <select multiple class="form-control" id="teamIds" name="TeamIds[]" required>
+            @foreach (var team in Model.Teams)
+            {
+                <option value="@team.Id">@team.Name</option>
+            }
+        </select>
+        <small class="form-text text-muted">Hold down Ctrl (Windows) or Command (Mac) to select multiple teams.</small>
+    </div>
+    <button type="submit" class="btn btn-primary">Assign Teams</button>
+</form>
+
+<script>
+    $(document).ready(function () {
+
+        var baseUrl = $('#baseUrl').val();
+
+        var tournamentSelect = $('#tournamentId');
+        var teamsSelect = $('#teamIds');
+        
+        tournamentSelect.change(function () {
+            var tournamentId = tournamentSelect.val();
+
+
+            var headers = {};
+            if (token) {
+                headers.Authorization = "Bearer " + $('#token').val();
+            }
+
+            var unassignedTeamsUrl = baseUrl + 'api/Team/unassigned?TournamentId=' + tournamentId;
+
+            $.ajaxSetup({
+                headers: headers
+            });
+
+            $.get(unassignedTeamsUrl, function (data) {
+                teamsSelect.empty();
+
+                $.each(data.payload, function (index, team) {
+                    teamsSelect.append($('<option>', {
+                        value: team.id,
+                        text: team.name
+                    }));
+                });
+            });
+        });
+    });
+</script>
+
+<style>
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-control[multiple] {
+        height: auto;
+        min-height: 120px;
+        max-height: 240px;
+        overflow-y: auto;
+    }
+
+        .form-control[multiple] option {
+            padding: 5px;
+        }
+
+    .form-text {
+        margin-top: 5px;
+    }
+</style>

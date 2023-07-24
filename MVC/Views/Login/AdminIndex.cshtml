@@ -1,0 +1,84 @@
+﻿@{
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = "_AdminLayout";
+}
+
+<h1>Welcome to the Admin Dashboard</h1>
+
+<div class="card-container">
+    <div class="card">
+        <h2>Teams</h2>
+        <p>Manage teams and view team details.</p>
+        <a asp-controller="Team" asp-action="AdminIndex" class="btn btn-primary">Go to Teams</a>
+    </div>
+    <div class="card">
+        <h2>Tournaments</h2>
+        <p>Manage tournaments and view tournament details.</p>
+        <a asp-controller="Tournament" asp-action="AdminIndex" class="btn btn-primary">Go to Tournaments</a>
+    </div>
+    <div class="card">
+        <h2>Tournaments & Teams</h2>
+        <p>Assign teams to tournaments and view details</p>
+        <a asp-controller="TournamentTeam" asp-action="Index" class="btn btn-primary">Go to Tournaments & Teams</a>
+    </div>
+</div>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        color: #333;
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .card-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+
+    .card {
+        width: 300px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .card p {
+            margin-bottom: 20px;
+            color: #666;
+        }
+
+        .card .btn {
+            display: block;
+            width: 100%;
+            background-color: #337ab7;
+            color: #fff;
+            text-decoration: none;
+            text-align: center;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+            .card .btn:hover {
+                background-color: #286090;
+            }
+</style>

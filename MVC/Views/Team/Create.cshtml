@@ -1,0 +1,66 @@
+﻿@model CreateTeamVm
+
+@{
+    ViewData["Title"] = "Create Team";
+    Layout = "_AdminLayout"; 
+}
+
+<h1>Create Team</h1>
+
+@if (!string.IsNullOrEmpty(TempData["Message"]?.ToString()))
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["Message"]
+    </div>
+}
+
+<form asp-controller="Team" asp-action="AddTeam" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" name="name" required>
+    </div>
+    <div class="form-group">
+        <label for="description">Description</label>
+        <textarea class="form-control" id="description" name="description" required></textarea>
+    </div>
+    <div class="form-group">
+        <label for="officialWebsiteURL">Official Website</label>
+        <input type="text" class="form-control" id="officialWebsiteURL" name="officialWebsiteURL" required>
+    </div>
+    <div class="form-group">
+        <label for="logo">Logo</label>
+        <input type="file" class="form-control-file" id="logo" name="logo" required accept="image/png, image/jpeg"/>
+    </div>
+    <div class="form-group">
+        <label for="foundationDate">Foundation Date</label>
+        <input type="date" class="form-control" id="foundationDate" name="foundationDate" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>
+
+<style>
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    .alert-danger {
+        color: #721c24;
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+        padding: 10px;
+        margin-bottom: 20px;
+    }
+
+        .alert-danger ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .alert-danger li {
+            margin-bottom: 5px;
+        }
+</style>

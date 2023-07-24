@@ -1,0 +1,57 @@
+﻿@model List<TournamentTeamAllView>
+
+@{
+    ViewData["Title"] = "Tournament List";
+    Layout = "_Layout"; 
+}
+
+<h1>Tournament List</h1>
+
+
+
+@foreach (var item in Model)
+{
+    <div class="tournament-card">
+        <h3>@item.Tournament.Name</h3>
+        <p>@item.Tournament.Description</p>
+        <div class="assigned-teams">
+            @foreach (var team in item.Teams)
+            {
+                <span class="team-chip">
+                    @team.Name
+                </span>
+            }
+
+        </div>
+    </div>
+}
+
+
+
+<style>
+    .tournament-card {
+        margin-bottom: 20px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+        .tournament-card h2 {
+            margin-top: 0;
+        }
+
+    .assigned-teams {
+        margin-top: 10px;
+        display:flex;
+    }
+
+    .team-chip {
+        display: flex;
+        align-items:center;
+        padding: 4px 8px;
+        background-color: #f2f2f2;
+        border-radius: 4px;
+        margin-right: 4px;
+    }
+
+</style>

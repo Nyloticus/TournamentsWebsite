@@ -1,0 +1,104 @@
+﻿@model List<TournamentTeamAllView>
+
+@{
+    ViewData["Title"] = "Tournament List";
+    Layout = "_AdminLayout"; 
+}
+<input type="hidden" id="token" value="@ViewBag.Token" />
+<input type="hidden" id="baseUrl" value="@ViewBag.BaseUrl" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<h1>Tournament List</h1>
+
+@if (Model.Any()) 
+{
+    <div>
+        <a class="btn btn-primary assigned-teams-btn" asp-controller="TournamentTeam" asp-action="CreateView">Assign Teams to Tournament</a>
+    </div>
+}
+
+
+@foreach (var item in Model)
+{
+    <div class="tournament-card">
+        <h3>@item.Tournament.Name</h3>
+        <p>@item.Tournament.Description</p>
+        <div class="assigned-teams">
+            @foreach (var team in item.Teams)
+            {
+                <span class="team-chip">
+                    @team.Name
+                    <span class="closebtn" onclick="removeTeam('@team.Id', '@item.Tournament.Id')">&times;</span>
+                </span>
+            }
+
+        </div>
+    </div>
+}
+
+<script>
+    function removeTeam(teamId, tournamentId) {
+        if (confirm("Are you sure you want to remove this team from the tournament?")) {
+            $.ajax({
+                url: '@Url.Action("RemoveAssign", "TournamentTeam")',
+                type: 'POST',
+                data: {
+                    TournamentId: tournamentId,
+                    TeamIds: [teamId]
+                },
+                success: function (data) {
+                    location.reload();
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    alert('error removing the team.');
+                }
+            });
+        }
+    }
+</script>
+
+
+<style>
+    .tournament-card {
+        margin-bottom: 20px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+        .tournament-card h2 {
+            margin-top: 0;
+        }
+
+    .assigned-teams {
+        margin-top: 10px;
+        display:flex;
+    }
+
+    .team-chip {
+        display: flex;
+        align-items:center;
+        padding: 4px 8px;
+        background-color: #f2f2f2;
+        border-radius: 4px;
+        margin-right: 4px;
+    }
+
+    .closebtn {
+        padding-left: 10px;
+        color: #888;
+        font-weight: bold;
+        float: right;
+        font-size: 20px;
+        cursor: pointer;
+        transition: color 0.2s ease-in-out;
+    }
+
+    .assigned-teams-btn{
+        margin: 20px 0;
+    }
+
+        .closebtn:hover {
+            color: #000;
+        }
+</style>

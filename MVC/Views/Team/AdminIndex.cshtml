@@ -1,0 +1,64 @@
+﻿@model List<ViewTeam>
+
+@{
+    ViewData["Title"] = "Team Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Team Index</h1>
+
+<table class="team-table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Official Website</th>
+            <th>Logo</th>
+            <th>Foundation Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var team in Model)
+        {
+            <tr>
+                <td>@team.Name</td>
+                <td>@team.Description</td>
+                <td><a href="@team.OfficialWebsiteURL">@team.OfficialWebsiteURL</a></td>
+                <td><img src="@team.LogoURL" alt="Team Logo" /></td>
+                <td>@team.FoundationDate.ToString("yyyy-MM-dd")</td>
+                <td>
+                    <a href="@Url.Action("Edit", "Team", new { id = team.Id })">Edit</a> |
+                    <a href="@Url.Action("Delete", "Team", new { id = team.Id })">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <h2>Create New Team</h2>
+    <a asp-controller="Team" asp-action = "Create" class="btn btn-primary">Create</a>
+</div>
+
+<style>
+    .team-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .team-table th, .team-table td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .team-table th {
+            background-color: #f2f2f2;
+        }
+
+        .team-table img {
+            max-width: 100px;
+            max-height: 100px;
+        }
+</style>

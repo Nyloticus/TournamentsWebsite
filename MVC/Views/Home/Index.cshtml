@@ -1,0 +1,57 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container">
+    <div class="jumbotron text-center">
+        <h1 class="display-4">Welcome</h1>
+        <p>Welcome to tournaments website.</p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Tournaments</h5>
+                    <p class="card-text">Explore our exciting tournaments.</p>
+                    <a asp-controller="Tournament" asp-action="Index" class="btn btn-primary">View Tournaments</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Teams</h5>
+                    <p class="card-text">Discover our amazing teams.</p>
+                    <a asp-controller="Team" class="btn btn-primary">View Teams</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Tournament Teams</h5>
+                    <p class="card-text">Check out the teams assigned to tournaments.</p>
+                    <a asp-controller="TournamentTeam" asp-action="Index" class="btn btn-primary">View Tournament Teams</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<style>
+    .jumbotron {
+        background-color: #f8f9fa;
+        padding: 40px;
+        margin-bottom: 40px;
+    }
+
+    .card {
+        margin-bottom: 20px;
+    }
+</style>
+

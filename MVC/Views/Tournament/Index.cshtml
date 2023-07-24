@@ -1,0 +1,57 @@
+﻿@model List<ViewTournament>
+
+@{
+    ViewData["Title"] = "Tournament Index";
+    Layout = "_Layout"; 
+}
+
+<h1>Tournament Index</h1>
+
+<table class="Tournament-table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Logo</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var tournament in Model)
+        {
+            <tr>
+                <td>@tournament.Name</td>
+                <td>@tournament.Description</td>
+                <td><img src="@tournament.LogoURL" alt="Tournament Logo" /></td>
+                 <td>
+                    @if (!string.IsNullOrEmpty(@tournament.TournamentVideo))
+                    {
+                            <a href="/Tournament/ShowVideo/@tournament.Id">Watch Video</a>
+                    }
+                   </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<style>
+    .Tournament-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .Tournament-table th, .Tournament-table td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .Tournament-table th {
+            background-color: #f2f2f2;
+        }
+
+        .Tournament-table img {
+            max-width: 100px;
+            max-height: 100px;
+        }
+</style>

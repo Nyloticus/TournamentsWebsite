@@ -1,0 +1,67 @@
+﻿@model List<ViewTournament>
+
+@{
+    ViewData["Title"] = "Tournament Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Tournament Index</h1>
+
+<table class="Tournament-table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Logo</th>
+            <th>Actions</th>
+            <th>Video</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var Tournament in Model)
+        {
+            <tr>
+                <td>@Tournament.Name</td>
+                <td>@Tournament.Description</td>
+                <td><img src="@Tournament.LogoURL" alt="Tournament Logo" /></td>
+                <td>
+                    <a href="@Url.Action("Edit", "Tournament", new { id = Tournament.Id })">Edit</a> |
+                    <a href="@Url.Action("Delete", "Tournament", new { id = Tournament.Id })">Delete</a>
+                </td>
+                <td>
+                    @if (!string.IsNullOrEmpty(Tournament.TournamentVideo))
+                    {
+                        <a href="/Tournament/ShowVideo/@Tournament.Id">Watch Video</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <h2>Create New Tournament</h2>
+    <a asp-controller="Tournament" asp-action = "Create" class="btn btn-primary">Create</a>
+</div>
+
+<style>
+    .Tournament-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .Tournament-table th, .Tournament-table td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .Tournament-table th {
+            background-color: #f2f2f2;
+        }
+
+        .Tournament-table img {
+            max-width: 100px;
+            max-height: 100px;
+        }
+</style>

@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Remove="StocksDetails\Commands\**" />
+      <EmbeddedResource Remove="StocksDetails\Commands\**" />
+      <None Remove="StocksDetails\Commands\**" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="BouncyCastle.NetCore" Version="1.8.10" />
+        <PackageReference Include="FastReport.Compat" Version="2022.3.2" />
+        <PackageReference Include="FastReport.OpenSource" Version="2022.3.9" />
+        <PackageReference Include="FastReport.OpenSource.Data.MsSql" Version="2021.4.0" />
+        <PackageReference Include="FastReport.OpenSource.Export.PdfSimple" Version="2022.3.9" />
+        <PackageReference Include="FastReport.OpenSource.Web" Version="2022.3.9" />
+        <PackageReference Include="Mapster" Version="7.2.0" />
+        <PackageReference Include="Google.Apis.Auth" Version="1.55.0" />
+        <PackageReference Include="Mapster.JsonNet" Version="1.1.0" />
+        <PackageReference Include="MediatR" Version="9.0.0" />
+        <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.1.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="5.0.13" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+        <PackageReference Include="Renci.SshNet.Async" Version="1.4.0" />
+        <PackageReference Include="SSH.NET" Version="2016.1.0" />
+        <PackageReference Include="System.IO.FileSystem.Primitives" Version="4.3.0" />
+        <PackageReference Include="System.Text.Encoding.CodePages" Version="6.0.0" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\Common\Common.csproj" />
+      <ProjectReference Include="..\Infrastructuer\Infrastructuer.csproj" />
+    </ItemGroup>
+</Project>

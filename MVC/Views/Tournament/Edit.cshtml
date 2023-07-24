@@ -1,0 +1,152 @@
+﻿@model ViewTournament
+
+@{
+    ViewData["Title"] = "Edit Tournament";
+    Layout = "_AdminLayout"; 
+}
+
+<h1>Edit Tournament</h1>
+@if (!string.IsNullOrEmpty(TempData["Message"]?.ToString()))
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["Message"]
+    </div>
+}
+
+<form asp-controller="Tournament" asp-action="EditTournament" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="id">ID</label>
+        <input type="text" class="form-control" id="id" name="id" value="@Model.Id" readonly hidden> 
+    </div>
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" name="name" value="@Model.Name" required>
+    </div>
+    <div class="form-group">
+        <label for="description">Description</label>
+        <textarea class="form-control" id="description" name="description" required>@Model.Description</textarea>
+    </div>
+    <div class="form-group">
+        <label for="description">Tournament Video</label>
+        <textarea class="form-control" id="TournamentVideo" name="TournamentVideo" required placeholder="Insert Youtube video link">@Model.TournamentVideo</textarea>
+    </div>
+    <div class="form-group" id="logo-group">
+        <label for="logo">Logo</label>
+        <img src="@Model.LogoURL" alt="Team Logo" class="logo-image" id="previewLogo">
+        <input type="file" class="form-control-file" id="logoInput" name="logo" accept="image/*">
+        <button type="button" class="btn btn-danger" id="removeLogoButton">Remove Logo</button>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update</button>
+</form>
+<script>
+
+    const logoInput = document.getElementById('logoInput');
+
+    const previewLogo = document.getElementById('previewLogo');
+    const logoGroup = document.getElementById('logo-group');
+
+    const originalLogoURL = '@Model.LogoURL';
+
+
+    logoInput.addEventListener('change', function (event) {
+        const file = event.target.files[0];
+
+        if (file) {
+
+            const reader = new FileReader();
+
+
+            reader.onload = function (e) {
+
+                previewLogo.src = e.target.result;
+            };
+
+
+            reader.readAsDataURL(file);
+        }
+    });
+
+
+    const removeLogoButton = document.getElementById('removeLogoButton');
+    removeLogoButton.addEventListener('click', function () {
+        const newLogoInput = document.createElement('input');
+        newLogoInput.type = 'file';
+        newLogoInput.className = 'form-control-file';
+        newLogoInput.required = true;
+        newLogoInput.id = 'logoInput';
+        newLogoInput.name = 'logo';
+        newLogoInput.accept = 'image/*';
+        console.log(logoInput)
+        console.log(logoGroup)
+        logoGroup.replaceChild(newLogoInput, logoInput);
+
+        previewLogo.src = '';
+        previewLogo.style.display = 'none'
+    });
+
+
+    function convertUrlToFile(url, filename, mimeType) {
+        return fetch(url)
+            .then(response => response.blob())
+            .then(blob => new File([blob], filename, { type: mimeType }));
+    }
+
+    window.onload = async function () {
+        const logoURL = '@Model.LogoURL';
+
+        const logoFile = await convertUrlToFile(logoURL, 'logo.jpg', 'image/jpeg');
+        logoInput.files = new FileList();
+        logoInput.files.add(logoFile);
+    };
+</script>
+<style>
+    .edit-form {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        font-weight: bold;
+    }
+
+    input[type="text"],
+    textarea,
+    input[type="file"],
+    input[type="date"] {
+        width: 100%;
+        padding: 8px;
+        font-size: 16px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+    }
+
+    button[type="submit"] {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        button[type="submit"]:hover {
+            background-color: #0062cc;
+        }
+
+    .logo-image {
+        display: block;
+        max-width: 200px;
+        margin-bottom: 10px;
+    }
+
+    #removeLogoButton {
+        margin-top: 10px;
+    }
+</style>
